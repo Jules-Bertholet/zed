@@ -7,7 +7,7 @@ use gpui::{
     IntoElement, Model, ModelContext, ParentElement, Render, Styled, Subscription, View,
     ViewContext, VisualContext, WeakModel, WindowContext,
 };
-use language::LanguageServerId;
+use language::{language_settings::SoftWrap, LanguageServerId};
 use lsp::{
     notification::SetTrace, IoKind, LanguageServer, LanguageServerName, MessageType,
     SetTraceParams, TraceValue,
@@ -691,6 +691,7 @@ impl LspLogView {
             editor.move_to_end(&MoveToEnd, cx);
             editor.set_read_only(true);
             editor.set_show_inline_completions(Some(false), cx);
+            editor.set_soft_wrap_mode(SoftWrap::EditorWidth, cx);
             editor
         });
         let editor_subscription = cx.subscribe(
@@ -728,6 +729,7 @@ impl LspLogView {
             editor.set_text(server_info, cx);
             editor.set_read_only(true);
             editor.set_show_inline_completions(Some(false), cx);
+            editor.set_soft_wrap_mode(SoftWrap::EditorWidth, cx);
             editor
         });
         let editor_subscription = cx.subscribe(
